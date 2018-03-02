@@ -1,0 +1,33 @@
+light.hue_white_lamp_1:
+  platform: hue
+  unique_id: 00:17:88:01:02:3b:a3:f3-0b
+light.hue_color_lamp_3:
+  platform: hue
+  unique_id: 00:17:88:01:10:42:cb:54-0b
+light.hue_lightstrip_plus_1:
+  platform: hue
+  unique_id: 00:17:88:01:01:1f:88:d3-0b
+light.hue_color_lamp_2:
+  platform: hue
+  unique_id: 00:17:88:01:10:42:ca:a4-0b
+light.hue_white_lamp_3:
+  platform: hue
+  unique_id: 00:17:88:01:02:3f:68:99-0b
+light.hue_color_lamp_1:
+  platform: hue
+  unique_id: 00:17:88:01:10:42:cf:85-0b
+light.hue_white_lamp_2:
+  platform: hue
+  unique_id: 00:17:88:01:02:3b:a3:c1-0b
+media_player.living_room_home:
+  platform: cast
+  unique_id: 66700d92-3990-70b5-4271-6648f91a3a8d
+media_player.home_group:
+  platform: cast
+  unique_id: 46b14f8c-fafa-448c-b45a-78daf093bab8
+media_player.bedroom_mini:
+  platform: cast
+  unique_id: e97a103a-6f26-24de-ca45-ef2b36c8b900
+media_player.living_room_tv:
+  platform: cast
+  unique_id: ebafb05a-25bf-1925-400f-7877fe3067b1

@@ -1,0 +1,87 @@
+  default_view:
+    view: yes
+    icon: mdi:home
+    entities:
+      - group.living_room
+      - group.dining_room
+      - group.pi
+      - sensor.owm_temperature
+      - sensor.owm_rain
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - camera.pi0_camera
+      - device_tracker.kyles_phone
+      - device_tracker.lauras_iphone
+      - group.Automations
+
+  living_room:
+    name: Living Room Lights
+    #icon: mdi:account-multiple
+    view: no #change to yes to make it a tab
+    entities:
+      - light.hue_color_lamp_1
+      - light.hue_color_lamp_2
+      - light.hue_color_lamp_3
+      - light.hue_lightstrip_plus_1
+      - light.hue_white_lamp_1
+  dining_room:
+    name: Dining Room Lights
+    #icon: mdi:account-multiple
+    view: no
+    entities:
+      - light.hue_white_lamp_2
+      - light.hue_white_lamp_3
+
+  google_homes:
+    name: Google Homes
+    #icon: mdi:account-multiple
+    view: yes
+    entities:
+      - media_player.bedroom_mini
+      - media_player.living_room_home
+  pi:
+    name: Raspberry Pi System
+    view: no
+    entities:
+      - sensor.disk_free_
+      - sensor.disk_use_
+      - sensor.memory_use
+      - sensor.memory_free
+      - sensor.memory_use_percent
+      - sensor.processor_use
+
+  presence:
+    view: no
+    name: Phone_Status
+      - device_tracker.kyles_phone
+      - device_tracker.lauras_iphone
+
+  weather_card:
+      name: Weather
+      entities:
+        - sensor.owm_cloud_coverage
+        - sun.sun
+        - sensor.owm_condition
+        - sensor.owm_humidity
+        - sensor.owm_pressure
+        - sensor.owm_rain
+        - sensor.owm_snow
+        - sensor.owm_temperature
+        - sensor.owm_wind_speed
+        - weather.openweathermap
+        - camera.radar
+  Weather:
+    view: yes
+    entities:
+      - group.weather_card
+
+  Automations:
+    name: Automations
+    view: no
+    entities:
+      - automation.Sunset_and_home
+      - automation.Laura_Left
+      - automation.Living_room_off_sunrise
+      - automation.away_lights
+      - automation.Kyle_home
+      - automation.Laura_home

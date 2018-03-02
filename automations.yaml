@@ -1,0 +1,233 @@
+#- alias: Sunset_and_home2
+#  trigger:
+#    platform: sun
+#    event: sunset
+#  condition:
+#    condition: state
+#    entity_id: group.location
+#    state: 'home'
+#  action:
+#    service: light.turn_on
+#    entity_id: group.living_room
+
+- alias: Sunset_and_home
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: '-00:25:00'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: device_tracker.kyles_phone
+        state: 'home'
+      - condition: state
+        entity_id: device_tracker.lauras_iphone
+        state: 'home'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.home_lights
+
+
+- alias: Laura_Left
+  trigger:
+    - platform: state
+      entity_id: device_tracker.lauras_iphone
+      from: 'home'
+      to: 'not_home'
+  action:
+    data:
+      message: "Laura left the house"
+    service: notify.gmail
+
+- alias: Away_Lights
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: '00:25:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: device_tracker.kyles_phone
+        state: 'not_home'
+      - condition: state
+        entity_id: device_tracker.lauras_iphone
+        state: 'not_home'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.away_lights
+
+
+- alias: Kyle_home
+  trigger:
+    platform: state
+    entity_id: device_tracker.kyles_phone
+    from: 'not_home'
+    to: 'home'
+  condition:
+    condition: state
+    entity_id: device_tracker.lauras_iphone
+    state: 'home'
+  action:
+    #- delay: '00:00:15'
+    - service: tts.google_say
+      data_template:
+        entity_id: media_player.home_group
+        message: "Kyle is home."
+
+- alias: Laura_home
+  trigger:
+    platform: state
+    entity_id: device_tracker.lauras_iphone
+    from: 'not_home'
+    to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: "10:00:00"
+        before: "21:00:00"
+      - condition: state
+        entity_id: device_tracker.kyles_phone
+        state: 'home'
+  action:
+    #- delay: '00:00:15'
+    - service: tts.google_say
+      data_template:
+        entity_id: group.google_homes
+        message: "Laura is home."
+
+
+#- alias: I_Left
+#  trigger:
+#    - platform: state
+#      entity_id: device_tracker.kyles_phone
+#      from: 'home'
+#      to: 'not_home'
+#  action:
+#    data:
+#      message: "I left the house"
+#    service: notify.gmail
+#
+#- alias: I_arrived
+#  trigger:
+#    - platform: state
+#      entity_id: device_tracker.kyles_phone
+#      from: 'not_home'
+#      to: 'home'
+#  action:
+#    data:
+#      message: "I arrived at the house"
+#    service: notify.gmail
+
+
+- alias: Living_room_off_sunrise
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: '00:20:00'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: device_tracker.kyles_phone
+        state: 'home'
+      - condition: state
+        entity_id: device_tracker.lauras_iphone
+        state: 'home'
+  action:
+    service: light.turn_off
+    entity_id: group.living_room
+
+
+#- alias: test
+#  trigger:
+#    - platform: time
+#      at: '18:42:00'
+#    - platform: state
+#      entity_id: group.presence
+#      state: 'home'
+#  condition:
+#    - condition: state
+#      entity_id: group.presence
+#      state: 'home'
+#    - condition: time
+#      after: '18:00:00'
+#      before: '19:00:00'
+#  action:
+#    service: light.turn_on
+#    entity_id: group.dining_room
+#- alias: test
+#  trigger:
+#    - platform: time
+#      at: '18:44:00'
+#  condition:
+#    - condition: state
+#      entity_id: group.presence
+#      state: 'home'
+#  action:
+#    service: light.turn_on
+#    entity_id: group.dining_room
+#
+#- alias: test
+#  trigger:
+#    - platform: state
+#      entity_id: group.presence
+#      to: 'home'
+#  action:
+#    service: light.turn_on
+#    entity_id: group.dining_room
+#
+#- alias: test2
+#  trigger:
+#    - platform: time
+#      at: '06:35:00'
+#  condition:
+#    - condition: state
+#      entity_id: group.presence
+#      state: 'home'
+#  action:
+#    service: light.turn_on
+#    entity_id: group.dining_room
+#
+#- alias: test3
+#  trigger:
+#    - platform: time
+#      at: '21:01:00'
+#  condition:
+#    - condition: state
+#      entity_id: group.presence
+#      state: 'home'
+#  action:
+#    service: light.turn_on
+#    entity_id: group.dining_room
+#
+#- alias: test4
+#  trigger:
+#    platform: time
+#    at: '09:06:00'
+#  condition:
+#    condition: or
+#    conditions:
+#    - condition: state
+#      entity_id: device_tracker.kyles_phone
+#      state: 'home'
+#    - condition: state
+#      entity_id: device_tracker.lauras_iphone
+#      state: 'home'
+#  action:
+#    data:
+#      message: "It works"
+#    service: notify.gmail
+#
+#- alias: test5
+#  trigger:
+#    platform: time
+#    at: '09:25:00'
+#  action:
+#    data:
+#      title: "Ayyyy"
+#      message: "It works"
+#    service: notify.gmail
+

@@ -1,0 +1,152 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 482
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Chicago
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+   api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+   base_url: !secret duck_url
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor: !include sensors.yaml
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+#Includes
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+camera: !include cameras.yaml
+scene: !include scenes.yaml
+
+# Add Panels to the side bar
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: http://hassio.local:3218
+  motioneye_access:
+    title: MotionEye
+    url: !secret motioneye_url
+    icon: mdi:video
+  terminal:
+    title: Terminal
+    icon: mdi:console-line
+    url: http://10.0.0.18:7681
+
+
+#Initialize Pushbullet
+notify:
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret pushbullet_key
+
+  - name: gmail
+    platform: smtp
+    server: smtp.gmail.com
+    port: 587
+    timeout: 15
+    sender: !secret my_email
+    encryption: starttls
+    username: !secret my_email
+    password: !secret gmail_pass
+    recipient: !secret phone_email
+    sender_name: My Home Assistant
+
+
+#Initialize IFTTT
+ifttt:
+   key: !secret ifttt_key
+
+#Device Tracking
+device_tracker:
+  - platform: netgear
+    host: 10.0.0.1
+    username: admin
+    password: !secret router_password
+    new_device_defaults:
+      track_new_devices: True
+      hide_if_away: False
+  - platform: ping
+    interval_seconds: 30
+    consider_home: 1200
+    hosts:
+      kyles_phone: 10.0.0.3
+      lauras_iphone: 10.0.0.12
+  - platform: nmap_tracker
+    home_interval: 20
+    hosts:
+      - 10.0.0.3
+      - 10.0.0.12
+
+#Weather Sensors
+weather:
+  - platform: openweathermap
+    api_key: !secret open_weather_api_key
+    latitude: !secret home_latitude
+    longitude: !secret home_longitude
+
+#Built in trigger to tun lights on when the sun sets and someone is home
+#device_sun_light_trigger:
+#  light_group: group.living_room
+#  device_group: group.phone_status
+#
+#
+#Initialize Nest
+#nest:
+#  client_id: !secret nest_client_id
+#  client_secret: !secret nest_client_secret
+#  structure:
+#    - Upstairs
+#    - Downstairs

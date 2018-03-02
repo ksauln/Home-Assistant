@@ -1,0 +1,31 @@
+- platform: yr
+
+- platform: openweathermap
+  api_key: !secret open_weather_api_key
+  forecast: 4
+  monitored_conditions:
+    - weather
+    - temperature
+    - wind_speed
+    - humidity
+    - clouds
+    - rain
+    - snow
+
+- platform: systemmonitor
+  resources:
+    - type: disk_free
+      arg: /
+    - type: disk_use
+      arg: /
+    - type: memory_free
+    - type: memory_use_percent
+    - type: processor_use
+
+- platform: speedtest
+  hour:
+    - 2
+  monitored_conditions:
+    - ping
+    - download
+    - upload
